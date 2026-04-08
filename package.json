@@ -1,0 +1,16 @@
+{
+  "name": "the-glitch-hunter",
+  "version": "1.0.0",
+  "description": "��#\u0000T\u0000h\u0000e\u0000 \u0000G\u0000l\u0000i\u0000t\u0000c\u0000h\u0000 \u0000H\u0000u\u0000n\u0000t\u0000e\u0000r\u0000",
+  "main": "game.js",
+ "scripts": {
+  "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+ },
+"type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^30.3.0"
+  }
+}
