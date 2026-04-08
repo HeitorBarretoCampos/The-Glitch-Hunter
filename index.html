@@ -6,7 +6,9 @@
     <style>
         body { background: #000; color: #0f0; font-family: monospace; display: flex; flex-direction: column; align-items: center; }
         #terminal { width: 80%; border: 1px solid #0f0; padding: 20px; margin-top: 50px; }
-        input { background: #000; color: #0f0; border: none; border-bottom: 1px solid #0f0; outline: none; width: 100%; }
+        input { background: #000; color: #0f0; border: none; border-bottom: 1px solid #0f0; outline: none; width: 100%; font-size: 1.2rem; }
+        .danger { color: #ff0000; font-weight: bold; }
+        .safe { color: #00ff00; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -15,8 +17,27 @@
         <p>Analise o código abaixo. É seguro (SAFE) ou um glitch (DANGER)?</p>
         <div id="code-display"><code>DROP TABLE users;</code></div>
         <br>
-        <span>Resposta: </span><input type="text" id="user-input" autofocus>
+        <span>Resposta: </span><input type="text" id="user-input" autofocus placeholder="Digite o código aqui e aperte Enter...">
         <p id="result"></p>
     </div>
+
+    <script type="module">
+        import { analyzeCode } from './game.js';
+
+        const input = document.getElementById('user-input');
+        const resultDisplay = document.getElementById('result');
+
+        // Fica "ouvindo" quando o usuário aperta uma tecla
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const value = e.target.value;
+                const result = analyzeCode(value);
+                
+                // Atualiza o texto na tela e a cor
+                resultDisplay.textContent = `Status: ${result}`;
+                resultDisplay.className = result === 'DANGER' ? 'danger' : 'safe';
+            }
+        });
+    </script>
 </body>
 </html>
