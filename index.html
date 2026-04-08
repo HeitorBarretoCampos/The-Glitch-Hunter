@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>The Glitch Hunter</title>
+    <style>
+        body { background: #000; color: #0f0; font-family: monospace; display: flex; flex-direction: column; align-items: center; }
+        #terminal { width: 80%; border: 1px solid #0f0; padding: 20px; margin-top: 50px; }
+        input { background: #000; color: #0f0; border: none; border-bottom: 1px solid #0f0; outline: none; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <h1>> THE GLITCH HUNTER_</h1>
+        <p>Analise o código abaixo. É seguro (SAFE) ou um glitch (DANGER)?</p>
+        <div id="code-display"><code>DROP TABLE users;</code></div>
+        <br>
+        <span>Resposta: </span><input type="text" id="user-input" autofocus>
+        <p id="result"></p>
+    </div>
+</body>
+</html>
