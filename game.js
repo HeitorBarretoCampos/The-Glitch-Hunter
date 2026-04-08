@@ -1,15 +1,13 @@
 export const analyzeCode = (code) => {
-    if (typeof code !== 'string' || !code) {
-        return 'SAFE';
-    }
+    if (typeof code !== 'string' || !code) return 'SAFE';
 
     const maliciousPatterns = [
         "DROP TABLE", 
         "OR 1=1", 
         "<SCRIPT>", 
         "ADMIN' --", 
-        "SELECT * FROM", 
-        "DELETE FROM"
+        "DELETE FROM",
+        "STEALCOOKIES"
     ];
     
     const isGlitch = maliciousPatterns.some(pattern => 
