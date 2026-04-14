@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>The Glitch Hunter - 5 Níveis</title>
+    <style>
+        body { background: #000; color: #0f0; font-family: monospace; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        #terminal { width: 80%; border: 1px solid #0f0; padding: 20px; margin-top: 50px; background: #050505; box-shadow: 0 0 15px #0f0; }
+        #code-display { background: #111; padding: 15px; border-left: 5px solid #0f0; margin: 15px 0; font-size: 1.2rem; min-height: 40px; }
+        input { background: #000; color: #0f0; border: none; border-bottom: 2px solid #0f0; outline: none; width: 200px; font-size: 1.2rem; text-transform: uppercase; }
+        .danger { color: #ff0000; }
+        .safe { color: #00ff00; }
+        #level-info { float: right; color: #888; }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <span id="level-info">Nível: 1/5</span>
+        <h1>> THE GLITCH HUNTER_</h1>
+        <p>Analise o trecho abaixo. Digite <b>SAFE</b> ou <b>DANGER</b>:</p>
+        
+        <div id="code-display"><code id="current-code"></code></div>
+        
+        <span>Resposta: </span>
+        <input type="text" id="user-input" autofocus maxlength="6">
+        <p id="result-message"></p>
+    </div>
+
+    <script type="module">
+        import { analyzeCode } from './game.js';
+
+        const challenges = [
+            { code: "DROP TABLE users;", type: "DANGER" },
+            { code: "const total = price + tax;", type: "SAFE" },
+            { code: "&lt;script&gt;stealCookies()&lt;/script&gt;", type: "DANGER" },
+            { code: "SELECT name FROM products;", type: "SAFE" },
+            { code: "admin' OR 1=1 --", type: "DANGER" }
+        ];
+
+        let currentLevel = 0;
+        const codeEl = document.getElementById('current-code');
+        const inputEl = document.getElementById('user-input');
+        const msgEl = document.getElementById('result-message');
+        const infoEl = document.getElementById('level-info');
+
+        function loadLevel() {
+            if (currentLevel < challenges.length) {
+                codeEl.textContent = challenges[currentLevel].code;
+                infoEl.textContent = `Nível: ${currentLevel + 1}/5`;
+                inputEl.value = "";
+                msgEl.textContent = "";
+            } else {
+                document.getElementById('terminal').innerHTML = "<h1>SISTEMA LIMPO!</h1><p>Você caçou todos os glitches com sucesso.</p>";
+            }
+        }
+
+        inputEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const answer = inputEl.value.toUpperCase();
+                const analysis = analyzeCode(challenges[currentLevel].code);
+
+                if (answer === analysis) {
+                    msgEl.innerHTML = "<span class='safe'>ACERTOU! Próximo nível...</span>";
+                    currentLevel++;
+                    setTimeout(loadLevel, 1500);
+                } else {
+                    msgEl.innerHTML = "<span class='danger'>FALHA NA ANÁLISE! Tente novamente.</span>";
+                }
+            }
+        });
+
+        loadLevel(); // Inicia o jogo
+    </script>
+</body>
+</html>
